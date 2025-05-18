@@ -1,0 +1,67 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    --header-height: 60px;
+    --footer-height: 40px;
+
+    --color-info: #2080f0;
+    --color-success:#18a058;
+    --color-warning:#f0a020;
+    --color-error:#d03050;
+}
+
+#app, #root, .n-config-provider {
+    height: 100%;
+    width: 100%;
+}
+
+.info {color:var(--color-info) !important;}
+.bg-info {background-color: var(--color-info) !important;color: white !important}
+.success {color:var(--color-success) !important;}
+.bg-success {background-color:var(--color-success) !important;color: white !important}
+.warning {color:var(--color-warning) !important;}
+.bg-warning {background-color: var(--color-warning) !important;color: white !important}
+.error {color: var(--color-error) !important;}
+.bg-error {background-color: var(--color-error) !important;color: white !important}
+.primary {color:var(--primary-color, var(--n-icon-color, var(--n-color-target, var(--n-loading-color, #18a058)))) !important;}
+.bg-primary {background-color: var(--n-color-target, #18a058) !important;color: white !important}
+.white {color: white;}
+.bg-white {background-color: white !important;}
+
+.h-flex {
+    height: 100%;
+    display:flex; flex-direction:column;
+}
+.flex-1 {
+    overflow-y: auto;
+    .n-card__content {
+        overflow-y: auto;
+    }
+}
+svg {
+    &.icon {
+        display: inline-block;
+        margin-right: 3px;
+    }
+}
+
+.h-full {
+    .n-tab-pane {
+        height: 100%;
+    }
+}
+.draggable {
+    cursor: move;
+}
+.h {
+    font-weight: 400;
+    font-size: 14px;
+    color: rgba(69,90,100,.6);
+}
+.b {
+    font-weight: bold;
+}
