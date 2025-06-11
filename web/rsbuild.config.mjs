@@ -17,7 +17,7 @@ const buildVersion = ()=>{
 const version = isProduction? buildVersion() : 'DEV'
 
 export default defineConfig({
-    source:{
+    resolve:{
         alias:{
             "@"             : "./src",
             "@V"            : "./src/views",
@@ -29,7 +29,9 @@ export default defineConfig({
             '@Pagination'   : "./src/components/mixin/Pagination",
             "@VW"           : "./src/views/widget",
             "@CODE"         : "./src/components/code.mirror.vue"
-        },
+        }
+    },
+    source:{
         define:{
             "_VERSION_"         : JSON.stringify(version),
             "_AUTHOR_"          : JSON.stringify(pkg.author),

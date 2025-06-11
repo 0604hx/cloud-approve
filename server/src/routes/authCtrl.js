@@ -60,7 +60,7 @@ module.exports = app=>{
 
             const playload = AuthBean.simple(staff.id, account.id)
             const client = UAParser(req.headers['user-agent'])
-            opLog(staff, `从ip${req.ip}登录(${client.browser.name} ${client.browser.major} ${client.device.type||""} ${client.os.name})`)
+            opLog(staff, `从IP⌈${req.ip}⌋登录(${client.browser.name} ${client.browser.major} ${client.device.type||""} ${client.os.name})`)
             //生成 TOKEN 并返回
             res.send(success(
                 createJwtToken(playload, config.secret.jwtKey, { expiresIn: config.secret.jwtExpire })

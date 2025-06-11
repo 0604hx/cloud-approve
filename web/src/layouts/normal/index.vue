@@ -35,7 +35,7 @@
     const siderWidth = import.meta.env.PUBLIC_SIDER_WIDTH
     const collapsedWidth = enableCollapsed?64:14
 
-    let collapsed = ref(false)
+    let collapsed = ref(window.innerWidth<=720)
     let showSider = ref(true)
     const contentStyle = computed(()=>({
         "padding-bottom":"var(--footer-height)",

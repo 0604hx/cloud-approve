@@ -9,14 +9,13 @@ const fastifyMulipart = require('@fastify/multipart')
 const fastifyStatic = require('@fastify/static')
 const { Roles } = require("../fields")
 const { TokenExpiredError } = require("jsonwebtoken")
-const { Role } = require("../db")
 
 /**
  *
  * @param {ServerConfig} config
  */
 exports.setupApp = config=>{
-    const app = fastify({logger: false, disableRequestLogging: true})
+    const app = fastify({logger: false, disableRequestLogging: true, trustProxy: true })
     app.register(fastifyMulipart)
     app.register(fastifyStatic, {
         root: resolve(process.cwd(), config.wwwDir),

@@ -3,7 +3,7 @@ import { NSpace, NButton, NTag } from 'naive-ui'
 import { Search, Plus } from 'lucide-vue-next'
 
 import { openProcess } from '@CF'
-import { Trash, UserCircle, Home, List, Chrome, Earth, Pencil } from 'lucide-vue-next'
+import { Trash, UserCircle, Home, List, Chrome, Earth, Pencil, BadgeJapaneseYen, NotepadText, Star, ThumbsUp, Bell, Settings, QrCode } from 'lucide-vue-next'
 
 const resizable     = true
 const ellipsis      = { tooltip: true }
@@ -68,6 +68,21 @@ function _triggerWithoutPromise(body, paramsNames, params){
     }
 }
 
+const api = {
+    /**
+     * 更新流程数据
+     * @param {Number} id
+     * @param {Object} value
+     * @param {Object} ps
+     * @param {String} ps.message
+     */
+    update: (id, value, { message })=>{
+        RESULT("/flow/page-data-update", {id, value}, d=>{
+            M.ok(message || `数据更新成功`)
+        })
+    }
+}
+
 /**
  *
  * @param {ButtonBean} btn
@@ -75,7 +90,7 @@ function _triggerWithoutPromise(body, paramsNames, params){
  * @param {Number} rowIndex
  */
 const onBtnClick = (btn, row, rowIndex)=>{
-    _triggerWithoutPromise(btn.handler, ['row', 'rowIndex'], [row, rowIndex])
+    _triggerWithoutPromise(btn.handler, ['row', 'rowIndex', 'api'], [row, rowIndex, api])
 }
 
 const toBtn = (style, other)=>{
@@ -102,7 +117,14 @@ export const icons = {
     List: List,
     Chrome: Chrome,
     Earth: Earth,
-    Pencil: Pencil
+    Pencil: Pencil,
+    Yuan : BadgeJapaneseYen,
+    Text : NotepadText,
+    Star: Star,
+    ThumbsUp: ThumbsUp,
+    Bell: Bell,
+    Setting: Settings,
+    QrCode: QrCode
 }
 
 

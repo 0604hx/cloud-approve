@@ -89,8 +89,10 @@ module.exports = app=>{
         return await ProcessService.loadData(form, pagination)
     }))
 
-    app.post("/flow/page-data-update", req=> loadPageAndDeal(req, (page, staff)=>{
+    app.post("/flow/page-data-update", req=> loadPageAndDeal(req, async (page, staff)=>{
         let { id, value } = req.body
         logger.debug(`${staff.fullName}尝试更新数据#${id}`, value)
+
+        await ProcessService.updateUpdate(id, value)
     }))
 }

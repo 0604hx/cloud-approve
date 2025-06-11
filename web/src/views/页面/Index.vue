@@ -63,7 +63,7 @@
 
         bean.content.forms?.filter(f=>f.type=='hide').forEach(f=> form.value[f.id]=f.content)
         columns = buildColumns(bean.content, bean.content.forms?.filter(f=>f.type=='hide'))
-        console.debug(columns)
+        console.debug("页面数据列", columns)
         nextTick(()=>{
             inited.value = true
             bean.content.autoLoad && refresh()
@@ -71,7 +71,6 @@
     }
 
     onMounted(() => {
-        console.debug(route.name)
         if(route.name == 'page-local'){
             //从本地取出配置信息
             buildPage({id, content: H.store.getObj("pagePreview")})

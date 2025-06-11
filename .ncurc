@@ -1,5 +1,5 @@
 {
     "reject": [
-        "nanoid", "isolated-vm"
+        "nanoid", "isolated-vm","dingtalk-jsapi"
     ]
 }

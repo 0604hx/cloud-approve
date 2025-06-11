@@ -10,7 +10,7 @@ const { Status } = require("../beans")
 const FileService = require("./FileService")
 const { opLog } = require("./SystemService")
 const { pageToResult } = require("../routes/web-helper")
-const { isNil } = require("lodash")
+const { isNil, merge } = require("lodash")
 const { getNextAutoAction } = require("./FlowService")
 const config = require("../config")
 
@@ -317,5 +317,18 @@ module.exports = {
 
         let result = await q.page((pagination.page??1)-1, pagination.pageSize)
         return pageToResult(result)
+    },
+
+    /**
+     * 更新流程数据
+     * @param {Number} id
+     * @param {Object} value - 待更新对象
+     */
+    updateUpdate: async (id, value)=>{
+        let row = await ProcessData.query().findById(id)
+        if(!row)    throw `流程数据#${id}不存在`
+
+        value = merge(row.value, value)
+        await ProcessData.query().where({ id }).patch({ value })
     }
 }

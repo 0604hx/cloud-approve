@@ -11,11 +11,6 @@ module.exports = class Staff extends BaseAddonModel{
     phone   = undefined
     summary = undefined
 
-    // constructor(){
-    //     super()
-    //     Object.assign(this, new StaffBean())
-    // }
-
     get fullName(){
         return `${this.name}(${this.id})`
     }

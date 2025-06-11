@@ -12,28 +12,28 @@
     "dependencies": {
         "@arco-design/color": "^0.4.0",
         "@codemirror/lang-html": "^6.4.9",
-        "@codemirror/lang-javascript": "^6.2.3",
-        "@codemirror/lang-sql": "^6.8.0",
+        "@codemirror/lang-javascript": "^6.2.4",
+        "@codemirror/lang-sql": "^6.9.0",
         "@codemirror/state": "^6.5.2",
         "@codemirror/theme-one-dark": "^6.1.2",
         "@grid-form/designer": "^0.2.1",
         "@grid-form/render-naive": "^0.2.1",
         "codemirror": "^6.0.1",
-        "dingtalk-jsapi": "^2.15.6",
-        "lucide-vue-next": "^0.503.0",
+        "dingtalk-jsapi": "2.15.6",
+        "lucide-vue-next": "^0.514.0",
         "mitt": "^3.0.1",
         "mustache": "^4.2.0",
-        "naive-ui": "^2.41.0",
-        "pinia": "^3.0.2",
-        "pinia-plugin-persistedstate": "^4.2.0",
-        "vue": "^3.5.13",
+        "naive-ui": "^2.41.1",
+        "pinia": "^3.0.3",
+        "pinia-plugin-persistedstate": "^4.3.0",
+        "vue": "^3.5.16",
         "vue-codemirror": "^6.1.1",
         "vue-draggable-plus": "^0.6.0",
         "vue-router": "^4.5.1"
     },
     "devDependencies": {
         "@rsbuild/plugin-vue": "^1.0.7",
-        "unplugin-auto-import": "^19.1.2",
-        "unplugin-vue-components": "^28.5.0"
+        "unplugin-auto-import": "^19.3.0",
+        "unplugin-vue-components": "^28.7.0"
     }
 }

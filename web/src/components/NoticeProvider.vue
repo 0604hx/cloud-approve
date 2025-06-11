@@ -273,7 +273,7 @@
                                 }
                             }
                         }),
-                        ps.message? h('div',{class:"mt-2"}, h(NText, {depth:3}, UI.html(ps.message))) : undefined
+                        ps.message?(typeof(ps.message)=='string'?h('div',{class:"mt-2"}, h(NText, {depth:3}, UI.html(ps.message))): ps.message) : undefined
                     ],
                     onPositiveClick: onOk
                 })

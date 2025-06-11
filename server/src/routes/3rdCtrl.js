@@ -20,7 +20,7 @@ const { AuthBean } = require("../beans")
  */
 const buildToken = (acc, staff, ip)=>{
     const playload = AuthBean.simple(staff.id, acc.id)
-    opLog(staff, `从ip${ip}通过钉钉自动登录（CID=${staff.cid}）`)
+    opLog(staff, `从IP⌈${ip}⌋通过钉钉自动登录（CID=${staff.cid}）`)
     return createJwtToken(playload, config.secret.jwtKey, { expiresIn: config.secret.jwtExpire })
 }
 
