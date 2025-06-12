@@ -21,7 +21,7 @@ const { Page, ProcessNode } = require('../db')
  * @param {PageWorker} worker
  */
 const loadPageAndDeal = async (req, worker)=>{
-    let id = req.body.id || req.params.id
+    let id = req.body.pid || req.body.id || req.params.id
     let page = await loadPage(id)
     if(!page)   throw `页面#${id}不存在`
 
@@ -91,7 +91,7 @@ module.exports = app=>{
 
     app.post("/flow/page-data-update", req=> loadPageAndDeal(req, async (page, staff)=>{
         let { id, value } = req.body
-        logger.debug(`${staff.fullName}尝试更新数据#${id}`, value)
+        global.isDebug && logger.debug(`${staff.fullName}尝试更新数据#${id}`, value)
 
         await ProcessService.updateUpdate(id, value)
     }))

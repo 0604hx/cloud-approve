@@ -3,7 +3,11 @@ import { NSpace, NButton, NTag } from 'naive-ui'
 import { Search, Plus } from 'lucide-vue-next'
 
 import { openProcess } from '@CF'
-import { Trash, UserCircle, Home, List, Chrome, Earth, Pencil, BadgeJapaneseYen, NotepadText, Star, ThumbsUp, Bell, Settings, QrCode } from 'lucide-vue-next'
+import {
+    Trash, UserCircle, Home, List, Earth, Pencil, BadgeJapaneseYen,
+    NotepadText, Star, ThumbsUp, Bell, Settings, QrCode,
+    Download
+} from 'lucide-vue-next'
 
 const resizable     = true
 const ellipsis      = { tooltip: true }
@@ -29,6 +33,7 @@ export const C_ROW         = "row"
  *
  * @typedef {Object} ButtonBean
  * @property {String} label
+ * @property {String} tip - 提示信息
  * @property {String} category - 分类，通常是 global（全局）、row（数据行）
  * @property {String} icon - 图标，仅支持 fa 样式
  * @property {String} type - 类型，info、primary、warning、error、success
@@ -71,13 +76,15 @@ function _triggerWithoutPromise(body, paramsNames, params){
 const api = {
     /**
      * 更新流程数据
-     * @param {Number} id
+     * @param {Object} row
+     * @param {Number} row.id - 数据iD
+     * @param {Number} row.pid - 页面ID
      * @param {Object} value
      * @param {Object} ps
      * @param {String} ps.message
      */
-    update: (id, value, { message })=>{
-        RESULT("/flow/page-data-update", {id, value}, d=>{
+    update: ({ id, pid }, value, { message })=>{
+        RESULT("/flow/page-data-update", {id, pid, value}, d=>{
             M.ok(message || `数据更新成功`)
         })
     }
@@ -99,6 +106,15 @@ const toBtn = (style, other)=>{
 }
 
 /**
+ *
+ * @param {ButtonBean} btn
+ * @param {Object} form
+ */
+export const triggerGlobalFunc = (btn, form)=>{
+    _triggerWithoutPromise(btn.handler, ['form', 'api'], [form, api])
+}
+
+/**
  * 页面渲染模式
  */
 export const formatTypes = { normal: "普通", sfc:"SFC单页面" }
@@ -115,7 +131,6 @@ export const icons = {
     User: UserCircle,
     Home: Home,
     List: List,
-    Chrome: Chrome,
     Earth: Earth,
     Pencil: Pencil,
     Yuan : BadgeJapaneseYen,
@@ -124,7 +139,8 @@ export const icons = {
     ThumbsUp: ThumbsUp,
     Bell: Bell,
     Setting: Settings,
-    QrCode: QrCode
+    QrCode: QrCode,
+    Download: Download
 }
 
 
@@ -146,6 +162,7 @@ export const buildColumns = p=>{
         }
         else if(c.key == '#index#'){
             col.width ??= 60
+            // col.align ??= CENTER
             col.render = (r,i)=> `${i+1}`
         }
         else if(c.key == '#status#'){
@@ -162,7 +179,7 @@ export const buildColumns = p=>{
     })
 
     let ctrlCol = { title:"操作", resizable }
-    let ctrlWidth = p.buttons.reduce((c,v)=>c+v.label.length*30+(v.icon?40:0), 80)
+    let ctrlWidth = p.buttons.filter(btn=>btn.category==C_ROW).reduce((c,v)=>c+v.label.length*30+(v.icon?40:0), 80)
     ctrlCol.render = (row, rowIndex)=>{
         // 默认的按钮
         let btns = []
@@ -171,11 +188,11 @@ export const buildColumns = p=>{
 
         if(Array.isArray(p.buttons)){
             //增加额外的按钮
-            btns.push(...p.buttons.map(btn=>{
+            btns.push(...p.buttons.filter(btn=>btn.category==C_ROW).map(btn=>{
                 let slots = { default: ()=> btn.label }
                 if(btn.icon)
                     slots['icon'] = ()=>h(icons[btn.icon])
-                return h(NButton, toBtn(p.btnStyle, { type: btn.type||"default", size: p.size, onClick: ()=>onBtnClick(btn, row, rowIndex) }), slots)
+                return h(NButton, toBtn(p.btnStyle, { type: btn.type||"default", size: p.size, title:btn.tip, onClick: ()=>onBtnClick(btn, row, rowIndex) }), slots)
             }))
         }
         return h(NSpace, {size:"small", justify: CENTER }, ()=>btns)
@@ -186,3 +203,9 @@ export const buildColumns = p=>{
     cs.push(ctrlCol)
     return cs
 }
+
+/**
+ * 构建检索区按钮
+ * @param {Array<ButtonBean>} buttons
+ */
+export const getGlobalBtns = (buttons=[])=> buttons.filter(b=>b.category==C_GLOBAL)

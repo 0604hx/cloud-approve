@@ -4,7 +4,8 @@
             <tr>
                 <th width="40" class="text-center">#</th>
                 <th width="120">显示区域</th>
-                <th>按钮文本</th>
+                <th width="120">按钮文本</th>
+                <th>描述</th>
                 <th width="180">样式</th>
                 <th width="50">图标</th>
                 <th width="80" class="text-center">
@@ -17,6 +18,7 @@
                 <td class="text-center"> <AlignJustify class="draggable ml-1" size="20" /> </td>
                 <td><n-select :options="areas" v-model:value="item.category" /> </td>
                 <td><n-input v-model:value="item.label"/> </td>
+                <td><n-input v-model:value="item.tip" /></td>
                 <td><n-select :options="types" v-model:value="item.type" /></td>
                 <td>
                     <n-popover trigger="click">
