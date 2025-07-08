@@ -1,5 +1,13 @@
 import Mustache from 'mustache'
 
+const fixToCsv = v=>{
+    if(Array.isArray(v))
+        return `"${v.join(RN).replace(/"/g, "`")}"`
+    if(typeof(v)==='string')
+        return `"${v.replace(/"/g, "`")}"`
+    return v
+}
+
 /**
  * 保存内容到文件
  * @param {*} blob
@@ -19,7 +27,35 @@ function saveToFile(blob, fileName = "下载文件.txt") {
     document.body.removeChild(link)                 // 下载完成移除元素
 }
 
-export { saveToFile }
+/**
+ * 保存到 CSV 默认编码为 UTF-8
+ * @param {*} obj
+ * @param {*} fileName
+ */
+function saveToCSV(obj, fileName = "下载文件", newLine="\n") {
+    let csvText = ""
+    //参数为数组的情况
+    if(Array.isArray(obj)){
+        csvText = Array.isArray(obj[0])? obj.map(v=>v.map(fixToCsv).join(",")).join(newLine): obj.join(newLine)
+    }
+    else if(typeof(obj) === 'object'){
+        let { headers, rows } = obj
+        if(!headers && !Array.isArray(headers)) throw Error(`[CSV导出] Object 类型的参数必须传递 headers 属性`)
+        //写入标题栏
+        csvText += headers.map(h=> typeof(h)==='object'?h.text:h).join(",") + newLine
+
+        let headerIds = headers.map(h=> typeof(h)==='object'? h.key:h)
+        rows.forEach((row,rIndex)=>{
+            csvText += headerIds.map(id=>fixToCsv(row[id])).join(",") + newLine
+        })
+    }
+    else if(typeof(obj) === 'string')
+        csvText = obj
+
+    saveToFile(new Blob([csvText], { type: "application/csv;charset=utf-8" }), `${fileName}.csv`)
+}
+
+export { saveToFile, saveToCSV }
 
 /**
  * 渲染模板，示例：{{ name }}打开门

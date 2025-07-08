@@ -4,7 +4,7 @@
         <n-space v-if="pages.length">
             <n-tooltip v-for="p in pages" trigger="hover" placement="bottom-start">
                 <template #trigger>
-                    <n-button type="primary" secondary size="large" @click="goto(p)">{{p.name}}</n-button>
+                    <n-button type="primary" :secondary="light" size="large" @click="goto(p)">{{p.name}}</n-button>
                 </template>
                 {{ p.summary||'暂无描述信息' }}
             </n-tooltip>
@@ -16,6 +16,7 @@
 <script setup>
     import { PlaneTakeoff } from 'lucide-vue-next'
 
+    const props = defineProps({ light:{type:Boolean, default: true }})
     const router = useRouter()
     let pages = ref([])
 

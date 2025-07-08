@@ -105,7 +105,7 @@ class BaseModel extends Model {
             }
         })
 
-        if(Array.isArray(pagination.columns) && pagination.columns.length)
+        if(pagination && Array.isArray(pagination.columns) && pagination.columns.length)
             q.columns(...pagination.columns)
         return q
     }

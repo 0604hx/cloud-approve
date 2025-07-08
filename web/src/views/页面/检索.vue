@@ -6,7 +6,10 @@
                 <n-input v-if="item.type=='text'" v-model:value="form[item.id]" clearable />
                 <n-input-number v-else-if="item.type=='number'" v-model:value="form[item.id]" clearable/>
                 <n-switch v-else-if="item.type=='switch'" v-model:value="form[item.id]" />
-                <n-date-picker v-else-if="item.type=='date'" v-model:formatted-value="form[item.id]" class="w-full" clearable/>
+                <template v-else-if="item.type=='date'">
+                    <n-date-picker v-if="!item.content" v-model:value="form[item.id]" class="w-full" clearable/>
+                    <n-date-picker v-else v-model:formatted-value="form[item.id]" :format="item.content" class="w-full" clearable/>
+                </template>
             </n-form-item>
         </template>
         <n-form-item>
@@ -15,7 +18,7 @@
                     <template #icon><n-icon :component="Search" /> </template>
                 </n-button>
 
-                <n-button v-for="btn in buttons" secondary :type="btn.type" :title="btn.tip" @click="onBtnClick(btn)">
+                <n-button v-for="btn in buttons" secondary :type="btn.type" :loading="btn.loading" :title="btn.tip" @click="onBtnClick(btn)">
                     <template #icon><n-icon :component="icons[btn.icon]" /> </template>
                     {{ btn.label }}
                 </n-button>

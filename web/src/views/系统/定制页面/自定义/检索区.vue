@@ -7,7 +7,7 @@
                 <th width="180">标签名称</th>
                 <th width="110">宽度(PX)</th>
                 <th width="100">组件类型</th>
-                <th>值（如果是码表组件，则填写对应的编号）</th>
+                <th>值 <n-text depth="3" class="text-xs">码表组件则为对应的编号，日期组件可填写诸如 yyyy-MM-dd 的格式</n-text></th>
                 <th width="25">
                     <n-button circle size="tiny" secondary type="primary" @click="add()"><template #icon><n-icon :component="Plus" /></template> </n-button>
                 </th>

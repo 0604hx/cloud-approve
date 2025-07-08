@@ -1,4 +1,4 @@
-import { h } from 'vue'
+import { h, isRef, reactive } from 'vue'
 import { NSpace, NButton, NTag } from 'naive-ui'
 import { Search, Plus } from 'lucide-vue-next'
 
@@ -73,6 +73,17 @@ function _triggerWithoutPromise(body, paramsNames, params){
     }
 }
 
+const _changeLoading = (v, newVal=false)=>{
+    if(v != null){
+        if(isRef(v))
+            v.vlaue = newVal
+        else if(typeof(v)=='object')
+            v.loading = newVal
+        else
+            v = newVal
+    }
+}
+
 const api = {
     /**
      * 更新流程数据
@@ -87,7 +98,28 @@ const api = {
         RESULT("/flow/page-data-update", {id, pid, value}, d=>{
             M.ok(message || `数据更新成功`)
         })
-    }
+    },
+    /**
+     *
+     * @param {Object} form
+     * @param {Object|Proxy|Boolean} loading
+     * @param {Object} pagination
+     */
+    query: (form, loading=undefined, pagination={pageSize:1000})=> new Promise((ok)=>{
+        let id = location.hash.replace("#/page-","")
+        console.debug(`下载数据`, form, pagination, id)
+
+        _changeLoading(loading, true)
+        RESULT(
+            `/flow/page-data-${id}`,
+            { form: _raw(form), pagination },
+            d=>{
+                _changeLoading(loading, false)
+                ok(d.data)
+            },
+            { fail: e=> _changeLoading(loading, false) }
+        )
+    })
 }
 
 /**
@@ -111,7 +143,7 @@ const toBtn = (style, other)=>{
  * @param {Object} form
  */
 export const triggerGlobalFunc = (btn, form)=>{
-    _triggerWithoutPromise(btn.handler, ['form', 'api'], [form, api])
+    _triggerWithoutPromise(btn.handler, ['btn', 'form', 'api'], [btn, form, api])
 }
 
 /**
@@ -208,4 +240,7 @@ export const buildColumns = p=>{
  * 构建检索区按钮
  * @param {Array<ButtonBean>} buttons
  */
-export const getGlobalBtns = (buttons=[])=> buttons.filter(b=>b.category==C_GLOBAL)
+export const getGlobalBtns = (buttons=[], toProxy=true)=> {
+    let globalBtns = buttons.filter(b=>b.category==C_GLOBAL)
+    return toProxy ? reactive(globalBtns) : globalBtns
+}

@@ -4,10 +4,10 @@
 
         <n-card>
             <template #header><CirclePlus class="primary icon" style="margin-right: 8px;" size="20"/>新建流程</template>
-            <Create expand />
+            <Create expand :light="!ui.darkNav"/>
         </n-card>
 
-        <MinePage />
+        <MinePage :light="!ui.darkNav" />
     </n-space>
 </template>
 
@@ -18,6 +18,9 @@
     import MinePage from "./快捷菜单.vue"
     import Create from "@V/流程/Create.vue"
 
+    import { uiStore } from '@/store'
+
+    const ui = uiStore()
     const router = useRouter()
 
     const toLogin = ()=> router.push({name:"login"})

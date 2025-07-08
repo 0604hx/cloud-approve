@@ -50,7 +50,7 @@
             按钮⌈{{btner.item.label}}⌋的脚本代码
         </template>
         <n-alert type="info" class="mb-4" :bordered="false" >
-            点击按钮后出发，如果是<Tag size="small">数据行</Tag>按钮，参数为：btn（按钮对象）、row（行数据）、rowIndex（行序号）、api（封装接口）
+            点击按钮后触发，参数为：{{ btner.item.category==C_ROW?'row（行数据）、rowIndex（行序号）、api（封装接口）':'form（响应式表单值）、api（封装接口）' }}
         </n-alert>
 
         <CodeEditor v-model:value="btner.item.handler" height="420px" />

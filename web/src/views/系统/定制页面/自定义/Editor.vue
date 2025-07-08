@@ -3,7 +3,7 @@
         <template #description>数据加载中... </template>
     </n-spin>
     <n-space class="p-4" v-else size="large" vertical>
-        <n-card>
+        <n-card :size>
             <template #header>
                 <Palette class="icon primary" /> 表格/按钮外观
                 <n-text depth="3" class="ml-2 text-xs">定义页面内表格、按钮的基本外观属性</n-text>
@@ -40,21 +40,21 @@
                 </n-form-item-gi>
             </n-grid>
         </n-card>
-        <n-card>
+        <n-card :size>
             <template #header>
                 <Search class="icon primary" /> 检索区
                 <n-text depth="3" class="ml-2 text-xs">配置检索条件</n-text>
             </template>
             <SearchPane :items="bean.forms" />
         </n-card>
-        <n-card>
+        <n-card :size>
             <template #header>
                 <Columns3 class="icon primary" /> 数据列
                 <n-text depth="3" class="ml-2 text-xs">配置表格的列内容</n-text>
             </template>
             <ColumnPane :items="bean.columns" />
         </n-card>
-        <n-card>
+        <n-card :size>
             <template #header>
                 <CirclePower class="icon primary" /> 自定义按钮
                 <n-text depth="3" class="ml-2 text-xs">可配置数据行（表格内）、顶部区域（表格外）的按钮</n-text>

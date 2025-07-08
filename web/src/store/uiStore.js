@@ -2,12 +2,14 @@
  * @Author: 集成显卡
  * @Date: 2024-09-12 18:13:31
  * @Last Modified by: 集成显卡
- * @Last Modified time: 2025-01-19 12:04:51
+ * @Last Modified time: 2025-07-08 10:53:33
  *
  * UI 相关配置
  */
 import { defineStore } from 'pinia'
 import { generate, getRgbStr, getPresetColors } from '@arco-design/color'
+
+const greatColors = ['#18181b']
 
 /**
  * 判断是否为深色
@@ -26,7 +28,7 @@ export const defaultPrimaryColor = '#18a058'
 
 export const naiveThemeOverrides = { common: {} }
 
-export const presetColors = ()=>[defaultPrimaryColor, ...Object.entries(getPresetColors()).map(([, value]) => value.primary)]
+export const presetColors = ()=>[defaultPrimaryColor, ...greatColors, ...Object.entries(getPresetColors()).map(([, value]) => value.primary)]
 
 export const uiStore = defineStore('ca.ui', {
     state: () => ({

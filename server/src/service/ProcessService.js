@@ -32,6 +32,20 @@ const checkViewAuth = async (staff, id, loadData=false)=>{
     }
 }
 
+/**
+ *
+ * @param {Object} form
+ * @param {Pagination} pagination
+ */
+const buildQ = (form, pagination)=>{
+    let q = ProcessData.buildQuery(form, pagination)
+    //增加 JSON 属性的查询
+    Object.keys(form||{}).filter(k=>k.startsWith("$.") && !isNil(form[k])).forEach(k=>{
+        q.whereJsonPath(VALUE, k, '=', form[k])
+    })
+    return q
+}
+
 module.exports = {
     checkViewAuth,
 
@@ -309,11 +323,7 @@ module.exports = {
      * @param {Pagination} pagination
      */
     loadData : async (form, pagination={page:1, pageSize:20})=>{
-        let q = ProcessData.buildQuery(form, pagination)
-        //增加 JSON 属性的查询
-        Object.keys(form||{}).filter(k=>k.startsWith("$.") && !isNil(form[k])).forEach(k=>{
-            q.whereJsonPath(VALUE, k, '=', form[k])
-        })
+        let q = buildQ(form, pagination)
 
         let result = await q.page((pagination.page??1)-1, pagination.pageSize)
         return pageToResult(result)

@@ -10,7 +10,7 @@
     <n-space v-else size="large">
         <n-tooltip v-for="item in options" trigger="hover" placement="bottom-start">
             <template #trigger>
-                <n-button secondary size="large" type="primary" @click="onSelect(0, item)">{{ item.name }}</n-button>
+                <n-button :secondary="light" size="large" type="primary" @click="onSelect(0, item)">{{ item.name }}</n-button>
             </template>
             {{ item.summary||'暂无描述信息' }}
         </n-tooltip>
@@ -27,7 +27,8 @@
         expand:{type:Boolean, default: false},
         size:{type:String, default:"small"},
         trigger:{type:String, default:"click"},
-        color:{type:String}
+        color:{type:String},
+        light:{type:Boolean, default: true }
     })
     let options = ref([])
 
