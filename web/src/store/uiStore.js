@@ -2,14 +2,16 @@
  * @Author: 集成显卡
  * @Date: 2024-09-12 18:13:31
  * @Last Modified by: 集成显卡
- * @Last Modified time: 2025-07-08 10:53:33
+ * @Last Modified time: 2025-07-09 16:42:44
  *
  * UI 相关配置
  */
 import { defineStore } from 'pinia'
 import { generate, getRgbStr, getPresetColors } from '@arco-design/color'
 
-const greatColors = ['#18181b']
+const greatColors = [
+    '#18181b',      //shadcn-ui 主配色
+]
 
 /**
  * 判断是否为深色
@@ -63,6 +65,7 @@ export const uiStore = defineStore('ca.ui', {
 
             // // 代码参考 https://github.com/zclzone/vue-naive-admin/blob/2.x/src/store/modules/app.js
             document.body.style.setProperty('--primary-color', getRgbStr(colors[5]))
+            console.debug("主颜色", color, colors)
             this.naiveThemeOverrides.common = Object.assign(this.naiveThemeOverrides.common || {}, {
                 primaryColor: colors[5],
                 primaryColorHover: colors[4],

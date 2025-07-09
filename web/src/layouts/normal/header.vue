@@ -17,7 +17,7 @@
 
             <n-button :color :size circle quaternary class="nav-picker"><template #icon><Github /></template></n-button>
             <!-- <n-divider vertical :style="{ margin: '0px', backgroundColor:color }" /> -->
-            <n-dropdown trigger="click" @select="userMenuSelect" :options="userOptions" :show-arrow="true">
+            <n-dropdown trigger="click" @select="userMenuSelect" :options="userOptions" :show-arrow="true" style="padding: 8px;">
                 <n-button :color :size circle quaternary class="nav-picker">
                     <template #icon><CircleUserRound /></template>
                 </n-button>

@@ -7,14 +7,17 @@
             <template #icon><CirclePlus /></template>
         </n-button>
     </n-dropdown>
-    <n-space v-else size="large">
-        <n-tooltip v-for="item in options" trigger="hover" placement="bottom-start">
-            <template #trigger>
-                <n-button :secondary="light" size="large" type="primary" @click="onSelect(0, item)">{{ item.name }}</n-button>
-            </template>
-            {{ item.summary||'暂无描述信息' }}
-        </n-tooltip>
-    </n-space>
+    <template v-else>
+        <n-space size="large">
+            <n-tooltip v-for="item in options" trigger="hover" placement="bottom-start">
+                <template #trigger>
+                    <n-button :secondary="light" size="large" :disabled="item.disabled" type="primary" @click="onSelect(0, item)">{{ item.name }}</n-button>
+                </template>
+                {{ item.summary||'暂无描述信息' }}
+            </n-tooltip>
+        </n-space>
+        <n-text v-if="isExpired" depth="3">{{ expired }}</n-text>
+    </template>
 </template>
 
 <script setup>
@@ -30,7 +33,10 @@
         color:{type:String},
         light:{type:Boolean, default: true }
     })
+
+    const expired = "企业授权已过期，部分功能已受限，请联系管理员续期"
     let options = ref([])
+    let isExpired = computed(()=> options.value.some(v=>v.disabled==true))
 
     const refresh = ()=>RESULT("/flow/mine",{}, d=> {
         if(Array.isArray(d.data) && d.data.length)

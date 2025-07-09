@@ -2,6 +2,7 @@ const logger = require("../common/logger")
 const { Flow, ProcessNode } = require("../db")
 const FlowBean = require("../db/Flow")
 const { NAME, SUMMARY, CID, OPTIONS, ID, CHAINS } = require("../fields")
+const { loadCompany } = require("./CacheService")
 
 module.exports = {
     /**
@@ -48,7 +49,16 @@ module.exports = {
         }
     },
 
-    byCompany : async (cid)=>Flow.query().column(ID, NAME, CHAINS, OPTIONS, SUMMARY).where(CID, cid),
+    byCompany : async (cid)=> {
+        let company = await loadCompany(cid)
+
+        let beans = await Flow.query().column(ID, NAME, CHAINS, OPTIONS, SUMMARY).where(CID, cid)
+        //如果过期则提示
+        if(company.expire > 0 && company.expire < Date.now())
+            beans.forEach(b=>b.disabled = true)
+
+        return beans
+    },
 
     /**
      * 计算自动流程的下一个环节

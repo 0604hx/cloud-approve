@@ -83,10 +83,12 @@ exports.clearCompany= id=> cache.clear(`company.${id}`)
 exports.clearPage   = id=> {
     cache.clear(`page.${id}`)
     cache.clear(`page.view.${id}`, true)
+    cache.clear(`pages.`, true)
 }
 exports.clearFlow   = id=> cache.clear(`flow.${id}`)
 
 exports.loadFlow    = loadFlow
+exports.loadCompany = loadCompany
 exports.loadStaff   = loadStaff
 exports.loadAccount = loadAccount
 
