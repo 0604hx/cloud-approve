@@ -1,8 +1,14 @@
 import Mustache from 'mustache'
 
+const NEW_LINE = "\n"
+
+/**
+ * 处理特殊字符，若参数为数组则进行换行转换
+ * @Param {*} v
+ */
 const fixToCsv = v=>{
     if(Array.isArray(v))
-        return `"${v.join(RN).replace(/"/g, "`")}"`
+        return `"${v.join(NEW_LINE).replace(/"/g, "`")}"`
     if(typeof(v)==='string')
         return `"${v.replace(/"/g, "`")}"`
     return v
@@ -29,10 +35,11 @@ function saveToFile(blob, fileName = "下载文件.txt") {
 
 /**
  * 保存到 CSV 默认编码为 UTF-8
- * @param {*} obj
- * @param {*} fileName
+ * @param {Array|Object} obj - 数据对象，可以是二维数组/Object（包含 headers、rows 属性）
+ * @param {String} fileName - 文件名
+ * @param {String} newLine - 换行符，默认 \n
  */
-function saveToCSV(obj, fileName = "下载文件", newLine="\n") {
+function saveToCSV(obj, fileName = "下载文件", newLine=NEW_LINE) {
     let csvText = ""
     //参数为数组的情况
     if(Array.isArray(obj)){
