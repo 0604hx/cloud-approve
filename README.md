@@ -1,5 +1,7 @@
 # 云审批/Cloud Approve
 
+一款专为小微企业打造，支持多租户的在线审批神器。它简化了申请和审批流程，让您随时随地通过手机或电脑完成审批操作，方便快捷😄。
+
 **📷 运行预览**
 
 <table style="border: none;">
@@ -9,18 +11,18 @@
   </tr>
 </table>
 
-## 二次开发
+## 👨‍💻 二次开发
 
 ### 🛠️开发环境
 
 * **node.js**（建议使用 21~22）
 * **pnpm**
 
-## 主流平台接入
+## 🔌 主流平台接入
 
 * [飞书客户端内网页应用接入指南](https://open.feishu.cn/document/uYjL24iN/uMTMuMTMuMTM/development-guide/webapp-incremental-authorization-access-guide)
 
-## uni-app 版本
+## ⏰ uni-app 版本
 > 未来支持微信小程序、APP会考虑使用[uni-app](https://uniapp.dcloud.net.cn/)开发
 
 ### 参考项目
